@@ -159,7 +159,7 @@ wheels = [
 ]
 
 [[package]]
-name = "lmp-anlys"
+name = "lmp-anly"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
