@@ -1,6 +1,6 @@
 [project]
 name = "lmp-anly"
-version = "0.1.1"
+version = "0.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -9,7 +9,8 @@ dependencies = [
     "numpy>=2.3.2",
     "pandas>=2.3.2",
     "scipy>=1.16.1",
+    "typer>=0.20.0",
 ]
 classifiers = ["Private :: Do Not Upload"]
 [project.scripts]
-lmp_anly = "lmp_anly.main:main"
+lmp_anly = "lmp_anly.__main__:main"
