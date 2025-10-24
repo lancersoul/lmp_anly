@@ -8,7 +8,7 @@
 * [x] 基于LAMMPS log计算介电常数
 * [x] 基于LAMMPS输出的dipole.txt计算介电常数
 * [x] 统计 `reax_tool` 的输出文件并只绘制显著产物的数据
-* [-] 更多LAMMPS功能请在issue中提出
+* [ ] 更多LAMMPS功能请在issue中提出
 
 ## 用法
 
@@ -33,9 +33,13 @@ lmp_anly species output_dir --threshold n --timestep n --figformat svg
 ## 鸣谢
 
 [matplotlib](https://matplotlib.org)
+
 [pandas](https://pandas.pydata.org/)
+
 [NumPy](https://numpy.org)
+
 [SciPy](https://scipy.org)
+
 [Typer](https://typer.tiangolo.com/)
 
 ## 许可
