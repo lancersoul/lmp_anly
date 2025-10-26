@@ -1,16 +1,15 @@
 import typer
-import matplotlib.pyplot as plt
 from typing import Literal
 from typing_extensions import Annotated
-from rich import print
 from pathlib import Path
-from collections import defaultdict
+from rich import print
 from lmp_anly.config_creater import ensure_default_config
-from lmp_anly.utils import measure_log
 from lmp_anly.utils import read_log
-from lmp_anly.utils import load_config
-from lmp_anly.utils import thermo_statis
-from lmp_anly.utils import cal_ep
+from lmp_anly.utils import read_config
+from lmp_anly.utils import load_figstyle
+from lmp_anly.log_ploter import plot_log
+from lmp_anly.cal_ep_via_log import cal_ep_via_log
+from lmp_anly.cal_ep_via_log import MissingValueError
 
 
 def log(
@@ -24,46 +23,32 @@ def log(
         "--epsilon", "-e", help="caculate epsilon via dipole moment in log")] = False,
 ):
     config_file = ensure_default_config()
-    config = load_config(config_file)
-    for key, value in config["mpl_style"].items():
-        plt.rcParams[key] = value
-    df_log = read_log(file, measure_log(file))
+    config = read_config(config_file)
+    load_figstyle(config)
+    line_element = config["line_element"]
+    df_log = read_log(file)
     work_dir = Path(file).parent
     fig_path = work_dir / "figure"
     Path.mkdir(fig_path, parents=True, exist_ok=True)
 
-    def find_multiplot_fig(fig_element):
-        all_fig = defaultdict(list)
-        for key, fig in fig_element.items():
-            value = fig["fig_name"]
-            all_fig[value].append(key)
-        return dict(all_fig)
+    plot_log(
+        df_log=df_log,
+        line_element=line_element,
+        fig_format=figformat,
+        fig_path=fig_path
+    )
 
-    line_element = config["line_element"]
-    all_fig = find_multiplot_fig(line_element)
-    for fig_name, line_list in all_fig.items():
-        if set([line_element[line]["column_name"] for line in line_list]) & set(df_log.columns):
-            plt.figure()
-            for line in line_list:
-                if line_element[line]["column_name"] in df_log.columns:
-                    plt.plot(
-                        df_log["Time"],
-                        df_log[line_element[line]["column_name"]],
-                        label=line_element[line]["label"]
-                    )
-            plt.xlabel("Time (ps)")
-            plt.ylabel(line_element[line_list[0]]["ylabel"])
-            plt.legend()
-            plt.savefig(fig_path / (fig_name + "." + figformat))
-
-    if epsilon and line_element["dipole_x"]["column_name"] in df_log.columns:
-        vol, temp = thermo_statis(df_log)
-        ep0 = cal_ep(
-            df_log.loc[40000:, line_element["dipole_x"]["column_name"]],
-            df_log.loc[40000:, line_element["dipole_y"]["column_name"]],
-            df_log.loc[40000:, line_element["dipole_z"]["column_name"]],
-            vol, temp
-        )
-        print("ep0=" + str(ep0))
-        with open(work_dir / "epsilon.txt", "w") as f:
-            f.write("epsilon by log\n" + str(ep0))
+    if epsilon:
+        try:
+            epsilon_file = work_dir / "epsilon.txt"
+            cal_ep_via_log(
+                df_log=df_log,
+                line_element=line_element,
+                epsilon_dump_file=epsilon_file
+            )
+        except MissingValueError as e:
+            print(f"[green bold]{
+                  e.missing_keys
+                  }[/green bold] not in LAMMPS log \nLAMMPS log head is \n{
+                  e.context['log_head']
+                  }")
