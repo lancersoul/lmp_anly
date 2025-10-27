@@ -13,4 +13,4 @@ dependencies = [
 ]
 classifiers = ["Private :: Do Not Upload"]
 [project.scripts]
-lmp_anly = "lmp_anly.__main__:main"
+lmp-anly = "lmp_anly.__main__:main"
