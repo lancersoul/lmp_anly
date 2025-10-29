@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from collections import defaultdict
+from rich.progress import track
+from rich import print
 
 
 def plot_log(df_log, line_element, fig_path, fig_format):
@@ -11,7 +13,8 @@ def plot_log(df_log, line_element, fig_path, fig_format):
         return dict(all_fig)
 
     all_fig = find_multiplot_fig(line_element)
-    for fig_name, line_list in all_fig.items():
+    fig_plot_count = 0
+    for fig_name, line_list in track(all_fig.items(), description="Plotting..."):
         if set([line_element[line]["column_name"] for line in line_list]) & set(df_log.columns):
             plt.figure()
             for line in line_list:
@@ -25,3 +28,7 @@ def plot_log(df_log, line_element, fig_path, fig_format):
             plt.ylabel(line_element[line_list[0]]["ylabel"])
             plt.legend()
             plt.savefig(fig_path / (fig_name + "." + fig_format))
+            fig_plot_count += 1
+        else:
+            print(f"{fig_name} is not in LAMMPS log!")
+    print(f"Plotted {fig_plot_count} figures.")
