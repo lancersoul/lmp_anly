@@ -4,8 +4,7 @@ from typing import Literal
 from typing_extensions import Annotated
 from rich import print
 from lmp_anly.config_creater import ensure_default_config
-from lmp_anly.utils import read_config
-from lmp_anly.utils import load_figstyle
+from lmp_anly.utils import read_config, load_figstyle
 from lmp_anly.plot_species import plot_species
 from lmp_anly.plot_bond import plot_bond
 

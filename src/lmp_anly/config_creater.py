@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
-from dataclasses import dataclass
-from dataclasses import asdict
+from dataclasses import dataclass, asdict
 from lmp_anly.utils import fd_config_path
 
 

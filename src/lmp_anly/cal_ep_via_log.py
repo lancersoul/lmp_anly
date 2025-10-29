@@ -1,5 +1,4 @@
-from lmp_anly.utils import cal_ep
-from lmp_anly.utils import thermo_statis
+from lmp_anly.utils import cal_ep, thermo_statis
 from rich import print
 
 
