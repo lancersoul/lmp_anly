@@ -13,10 +13,10 @@ def species(
     dir: Annotated[str, typer.Argument(help="output dir of reax_tools")],
     threshold: Annotated[int, typer.Option(
         "--threshold", "-th", help="threshold of species count")] = 0,
-    timestep: Annotated[int, typer.Option(
-        "--timestep", "-t", help="timestep of dump file")] = ...,
+    timestep: Annotated[float, typer.Option(
+        "--timestep", "-t", help="timestep of dump file")] = 1,
     figformat: Annotated[Literal["png", "svg"], typer.Option(
-        "--figformat", "-f", help="figure format, can be png or svg")] = "png",
+        "--figformat", "-f", help="figure format, can be png or svg")] = "svg",
 ):
     config_file = ensure_default_config()
     config = read_config(config_file)
@@ -25,6 +25,7 @@ def species(
     bond_file = Path(dir) / "bond_count.csv"
     work_dir = Path(dir).parent
     fig_path = work_dir / "figure"
+    Path.mkdir(fig_path, parents=True, exist_ok=True)
     try:
         plot_species(
             species_file,
