@@ -12,23 +12,25 @@
 
 ## 用法
 
+lmp_anly现在有三个子命令，分别用于控制log文件中所有图像的绘制、介电常数的计算以及绘制reax_tool工具输出的物种与键结关系图像。
+
 ```bash
 lmp_anly log log_file -f svg -e
 ```
 
-lmp_anly现在有两个 `flag` 可以启用： `-f` 用于控制输出图像格式（png / svg），  `-e` 用于控制是否通过 log 文件计算介电常数。图像会输出到与 log 文件同目录的 figure 目录下（目录会自动创建），计算得到的介电常数则会打印在屏幕上以及写在与 log 文件相同目录下的 epsilon.txt 中。
+`log` 命令现在有两个 `flag` 可以启用： `-f` 用于控制输出图像格式（png / svg），  `-e` 用于控制是否通过 log 文件计算介电常数。图像会输出到与 log 文件同目录的 figure 目录下（目录会自动创建），计算得到的介电常数则会打印在屏幕上以及写在与 log 文件相同目录下的 epsilon.txt 中。
 
 ```bash
 lmp_anly epsilon dipole.txt
 ```
 
-`epsilon` 功能虽然会用到 log 文件，但不需要手动输入 log 文件路径，它会在 dipole.txt 文件下寻找 log 文件，请在 LAMMPS `input` 文件中注意输出结构。同样，`epsilon` 的计算结果会在屏幕上打印显示，同时也会写入 epsilon.txt 文件中。
+`epsilon` 功能虽然会用到 log 文件，但不需要手动输入 log 文件路径，它会在 dipole.txt 文件下寻找 log 文件，请在 LAMMPS `input` 文件中注意输出结构。同样，`epsilon` 的计算结果会在屏幕上打印显示，同时也会写入 `epsilon.txt` 文件中。
 
 ```bash
 lmp_anly species output_dir --threshold n --timestep n --figformat svg
 ```
 
-对于 `species` 命令，`--timestep / -t` 选项是必须的，在其中写入你 dump 文件的步长（**不是模拟步长**)。`--thershold / -th` 用于控制显示门槛，产量高于此值的物种才会被纳入统计并在图像中显示。
+对于 `species` 命令，`--timestep / -t` 选项是必须的，在其中写入你 dump 文件的步长（**不是模拟步长**)。`--thershold / -th` 用于控制绘图的截断值，只有产量高于 n 的物种才会被绘制。
 
 ## 鸣谢
 
