@@ -1,7 +1,8 @@
-import json
+import matplotlib.pyplot as plt
+import rtoml
+import platform
 from pathlib import Path
 from dataclasses import dataclass, asdict
-from lmp_anly.utils import fd_config_path
 
 
 @dataclass
@@ -12,9 +13,9 @@ class FigDict:
     fig_name: str
 
 
-def ensure_default_config():
-    config_dir = fd_config_path() / "lmp_anly"
-    config_file = config_dir / "config.json"
+def create_default_config():
+    config_dir = fd_config_path() / "lmp-anly"
+    config_file = config_dir / "config.toml"
     if not Path.exists(config_file):
         Path.mkdir(config_dir, parents=True, exist_ok=True)
         DEFAULT_CONFIG = {
@@ -50,6 +51,29 @@ def ensure_default_config():
                 "dipole_z": asdict(FigDict("v_dipole_z", r"Dipole Moment ($\mathrm{eV \cdot Å}$)", "Dipole Moment in Z", "dipole")),
             }
         }
-        with open(config_file, "w", encoding="utf-8") as f:
-            json.dump(DEFAULT_CONFIG, f, ensure_ascii=False, indent=2)
-    return config_file
+        rtoml.dump(DEFAULT_CONFIG, config_file)
+    pass
+
+
+def read_config():
+    config_file = fd_config_path() / "lmp-anly" / "config.toml"
+    config_dict = rtoml.load(config_file)
+    return config_dict
+
+
+def load_figstyle(config):
+    for key, value in config["mpl_style"].items():
+        plt.rcParams[key] = value
+
+
+def fd_config_path():
+    system_name = platform.system()
+    if system_name == "Windows":
+        config_dir = Path.home() / "AppData" / "Local"
+    elif system_name == "Darwin":  # macOS
+        config_dir = Path.home() / "Library" / "Application Support"
+    elif system_name == "Linux":
+        config_dir = Path.home() / ".config"
+    else:
+        config_dir = Path.home() / ".config"  # 默认使用主目录
+    return config_dir

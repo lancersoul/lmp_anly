@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import scipy.constants as CONSTANTS
-import platform
 import json
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -52,26 +51,3 @@ def cal_ep(dipole_x_array, dipole_y_array, dipole_z_array, vol, temp):
     ep0 = 1 + 4 * CONSTANTS.pi * m_2 / (
         3 * CONSTANTS.k * vol * temp * CONSTANTS.epsilon_0)
     return ep0
-
-
-def fd_config_path():
-    system_name = platform.system()
-    if system_name == "Windows":
-        config_dir = Path.home() / "AppData" / "Local"
-    elif system_name == "Darwin":  # macOS
-        config_dir = Path.home() / "Library" / "Application Support"
-    elif system_name == "Linux":
-        config_dir = Path.home() / ".config"
-    else:
-        config_dir = Path.home() / ".config"  # 默认使用主目录
-    return config_dir
-
-
-def read_config(config_file):
-    with open(config_file, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def load_figstyle(config):
-    for key, value in config["mpl_style"].items():
-        plt.rcParams[key] = value

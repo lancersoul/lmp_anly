@@ -3,8 +3,8 @@ from typing import Literal
 from typing_extensions import Annotated
 from pathlib import Path
 from rich import print
-from lmp_anly.config_creater import ensure_default_config
-from lmp_anly.utils import read_log, read_config, load_figstyle
+from lmp_anly.config_utils import create_default_config, read_config, load_figstyle
+from lmp_anly.utils import read_log
 from lmp_anly.log_ploter import plot_log
 from lmp_anly.cal_ep_via_log import cal_ep_via_log, MissingValueError
 
@@ -15,12 +15,12 @@ def log(
     figformat: Annotated[
         Literal["png", "svg"],
         typer.Option("--format", "-f", help="figure format, can be png or svg")
-    ] = "png",
+    ] = "svg",
     epsilon: Annotated[bool, typer.Option(
         "--epsilon", "-e", help="caculate epsilon via dipole moment in log")] = False,
 ):
-    config_file = ensure_default_config()
-    config = read_config(config_file)
+    create_default_config()
+    config = read_config()
     load_figstyle(config)
     line_element = config["line_element"]
     df_log = read_log(file)
