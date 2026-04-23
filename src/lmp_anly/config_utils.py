@@ -20,12 +20,13 @@ def create_default_config():
         Path.mkdir(config_dir, parents=True, exist_ok=True)
         DEFAULT_CONFIG = {
             "mpl_style": {
-                "font.family": ["Times New Roman", "SimSun"],
+                "font.family": "serif",
+                "font.serif": ["Times New Roman", "TImes", "Nimbus Roman", "Nimbus Roman No9 L","Liberation Serif", "SimSun", "Songti SC", "STSong", "Noto Serif SC", "WenQuanYi Micro Hei", "DejaVu Serif"],
                 "mathtext.fontset": "stix",
                 "figure.constrained_layout.use": True,
                 "figure.figsize": [3.54, 2.36],
                 "figure.dpi": 300,
-                "lines.linewidth": 0.35
+                "lines.linewidth": 0.35,
             },
             "line_element": {
                 "density": asdict(FigDict("Density", r"Density ($\mathrm{g/cm^3}$)", "Density", "density")),
