@@ -35,7 +35,7 @@ jobs:
         run: |
           uv venv --python 3.11
           uv pip install --system . pyinstaller
-          uv run pyinstaller --onefile --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
+          uv run python -m PyInstaller --onefile --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
 
       - name: Build executable on manylinux
         if: matrix.os == 'ubuntu-latest'
