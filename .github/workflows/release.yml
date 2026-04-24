@@ -49,10 +49,12 @@ jobs:
           set -e
 
           yum install -y curl
+          curl -LsSf https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+          ./bin/micromamba create -y -p /opt/python-shared -c conda-forge python=3.11
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.local/bin:$PATH"
           source $HOME/.local/bin/env
-          uv venv --python /opt/python/cp311-cp311/bin/python
+          uv venv --python /opt/python-shared
           uv pip install . pyinstaller 
           uv run --no-sync python -m PyInstaller --onefile --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
           '
