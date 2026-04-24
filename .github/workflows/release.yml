@@ -52,8 +52,9 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.local/bin:$PATH"
           source $HOME/.local/bin/env
-          uv pip install --python /opt/python/cp311-cp311/bin/python . pyinstaller 
-          uv run --python /opt/python/cp311-cp311/bin/python pyinstaller --onefile --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
+          uv venv --python /opt/python/cp311-cp311/bin/python
+          uv pip install . pyinstaller 
+          uv run --no-sync python -m PyInstaller --onefile --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
           '
 
       - name: Upload Artifacts
