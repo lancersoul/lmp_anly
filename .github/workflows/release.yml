@@ -30,14 +30,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies and Build
         if: matrix.os != 'ubuntu-latest'
+        env: 
+          UV_SYSTEM_PYTHON: 1
         run: |
-          uv pip install . pyinstaller
-
-      - name: Build executable
-        if: matrix.os != 'ubuntu-latest'
-        run: |
+          uv pip install --system . pyinstaller
           uv run pyinstaller --onefile --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
 
       - name: Build executable on manylinux
