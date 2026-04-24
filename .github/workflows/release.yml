@@ -32,9 +32,8 @@ jobs:
 
       - name: Install dependencies and Build
         if: matrix.os != 'ubuntu-latest'
-        env: 
-          UV_SYSTEM_PYTHON: 1
         run: |
+          uv venv --python 3.11
           uv pip install --system . pyinstaller
           uv run pyinstaller --onefile --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
 
