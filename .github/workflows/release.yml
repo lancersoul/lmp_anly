@@ -47,7 +47,7 @@ jobs:
           yum install -y curl
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.local/bin:$PATH"
-          uv pip install --python /opt/python/cp311-cp311/bin/python . pyinstaller 
+          uv pip install --no-build --python /opt/python/cp311-cp311/bin/python . pyinstaller 
           uv run --python /opt/python/cp311-cp311/bin/python pyinstaller --onefile --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
           '
 
