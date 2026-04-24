@@ -39,7 +39,7 @@ jobs:
       - name: Build Package
         if: matrix.os != 'ubuntu-latest'
         run: |
-          uv run --python 3.11 --no-sync python -m PyInstaller --onefile --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
+          uv run --python 3.11 --no-sync python -m PyInstaller --onefile --hidden-import matplotlib.backends.backend_svg --collect-submodules lmp_anly --name lmp-anly-${{ matrix.os }} src/lmp_anly/__main__.py
 
 
       - name: Build executable on manylinux
@@ -56,7 +56,7 @@ jobs:
           source $HOME/.local/bin/env
           uv venv --python /opt/python-shared
           uv pip install . pyinstaller 
-          uv run --no-sync python -m PyInstaller --onefile --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
+          uv run --no-sync python -m PyInstaller --onefile --hidden-import matplotlib.backends.backend_svg --collect-submodules lmp_anly --name lmp-anly-${{matrix.os}} src/lmp_anly/__main__.py
           '
 
       - name: Upload Artifacts
