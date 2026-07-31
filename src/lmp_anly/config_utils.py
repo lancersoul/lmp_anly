@@ -3,6 +3,7 @@ import rtoml
 import platform
 from pathlib import Path
 from dataclasses import dataclass, asdict
+from lmp_anly.setup_fallback_font import setup_fallback_fonts
 
 
 @dataclass
@@ -21,7 +22,7 @@ def create_default_config():
         DEFAULT_CONFIG = {
             "mpl_style": {
                 "font.family": "serif",
-                "font.serif": ["Times New Roman", "TImes", "Nimbus Roman", "Nimbus Roman No9 L","Liberation Serif", "SimSun", "Songti SC", "STSong", "Noto Serif SC", "WenQuanYi Micro Hei", "DejaVu Serif"],
+                "font.serif": ["Times New Roman", "Times", "TexGyreTermes", "Nimbus Roman", "Nimbus Roman No9 L","Liberation Serif", "SimSun", "Songti SC", "STSong","FandolSong", "Noto Serif SC", "WenQuanYi Micro Hei", "DejaVu Serif"],
                 "mathtext.fontset": "stix",
                 "figure.constrained_layout.use": True,
                 "figure.figsize": [3.54, 2.36],
@@ -53,16 +54,19 @@ def create_default_config():
             }
         }
         rtoml.dump(DEFAULT_CONFIG, config_file)
-    pass
+        return True
+    else:
+        return False
 
 
 def read_config():
-    config_file = fd_config_path() / "lmp-anly" / "config.toml"
+    config_file = fd_config_path()
     config_dict = rtoml.load(config_file)
     return config_dict
 
 
 def load_figstyle(config):
+    setup_fallback_fonts()
     for key, value in config["mpl_style"].items():
         plt.rcParams[key] = value
 
@@ -77,4 +81,5 @@ def fd_config_path():
         config_dir = Path.home() / ".config"
     else:
         config_dir = Path.home() / ".config"  # 默认使用主目录
-    return config_dir
+    config_file = config_dir  / "lmp-anly" / "config.toml"
+    return config_file
