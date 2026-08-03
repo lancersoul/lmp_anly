@@ -15,14 +15,13 @@ class FigDict:
 
 
 def create_default_config():
-    config_dir = fd_config_path() / "lmp-anly"
-    config_file = config_dir / "config.toml"
+    config_file = fd_config_path()
     if not Path.exists(config_file):
-        Path.mkdir(config_dir, parents=True, exist_ok=True)
+        Path.mkdir(config_file.parent, parents=True, exist_ok=True)
         DEFAULT_CONFIG = {
             "mpl_style": {
                 "font.family": "serif",
-                "font.serif": ["Times New Roman", "Times", "TexGyreTermes", "Nimbus Roman", "Nimbus Roman No9 L","Liberation Serif", "SimSun", "Songti SC", "STSong","FandolSong", "Noto Serif SC", "WenQuanYi Micro Hei", "DejaVu Serif"],
+                "font.serif": ["Times New Roman", "Times", "TeX Gyre Termes", "Nimbus Roman", "Nimbus Roman No9 L","Liberation Serif", "SimSun", "Songti SC", "STSong","FandolSong", "Noto Serif SC", "WenQuanYi Micro Hei", "DejaVu Serif"],
                 "mathtext.fontset": "stix",
                 "figure.constrained_layout.use": True,
                 "figure.figsize": [3.54, 2.36],

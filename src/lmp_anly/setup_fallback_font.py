@@ -1,5 +1,7 @@
 from pathlib import Path
-from matplotlib.font_manager import fontManager, FontProperties
+
+from matplotlib.font_manager import fontManager
+
 
 def setup_fallback_fonts():
     asset_dir = Path(__file__).parent / "assets"
