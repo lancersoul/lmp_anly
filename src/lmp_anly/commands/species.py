@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Literal
 from typing_extensions import Annotated
 from rich import print
-from lmp_anly.config_utils import create_default_config, read_config, load_figstyle
+from lmp_anly.config_utils import read_config, load_figstyle
+from lmp_anly.setup_fallback_font import setup_fallback_fonts
 from lmp_anly.plot_species import plot_species
 from lmp_anly.plot_bond import plot_bond
 
@@ -17,7 +18,7 @@ def species(
     figformat: Annotated[Literal["png", "svg"], typer.Option(
         "--figformat", "-f", help="figure format, can be png or svg")] = "svg",
 ):
-    create_default_config()
+    setup_fallback_fonts()
     config = read_config()
     load_figstyle(config)
     species_file = Path(dir) / "species_count.csv"
