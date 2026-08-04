@@ -1,12 +1,13 @@
-import typer
 from pathlib import Path
-from typing import Literal
-from typing_extensions import Annotated
+from typing import Annotated, Literal
+
+import typer
 from rich import print
-from lmp_anly.config_utils import read_config, load_figstyle
-from lmp_anly.setup_fallback_font import setup_fallback_fonts
-from lmp_anly.plot_species import plot_species
+
+from lmp_anly.config_utils import load_figstyle, read_config
 from lmp_anly.plot_bond import plot_bond
+from lmp_anly.plot_species import plot_species
+from lmp_anly.setup_fallback_font import setup_fallback_fonts
 
 
 def species(

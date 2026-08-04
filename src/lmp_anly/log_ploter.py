@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
 from collections import defaultdict
-from rich.progress import track
+
+import matplotlib.pyplot as plt
 from rich import print
+from rich.progress import track
 
 
 def plot_log(df_log, line_element, fig_path, fig_format):
@@ -15,7 +16,7 @@ def plot_log(df_log, line_element, fig_path, fig_format):
     all_fig = find_multiplot_fig(line_element)
     fig_plot_count = 0
     for fig_name, line_list in track(all_fig.items(), description="Plotting..."):
-        if set([line_element[line]["column_name"] for line in line_list]) & set(df_log.columns):
+        if {line_element[line]["column_name"] for line in line_list} & set(df_log.columns):
             plt.figure()
             for line in line_list:
                 if line_element[line]["column_name"] in df_log.columns:

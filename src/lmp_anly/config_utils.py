@@ -1,8 +1,10 @@
+import platform
+from dataclasses import asdict, dataclass
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import rtoml
-import platform
-from pathlib import Path
-from dataclasses import dataclass, asdict
+
 from lmp_anly.setup_fallback_font import setup_fallback_fonts
 
 

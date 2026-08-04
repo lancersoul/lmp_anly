@@ -1,5 +1,6 @@
 import pandas as pd
-from lmp_anly.utils import read_log, thermo_statis, cal_ep
+
+from lmp_anly.utils import cal_ep, read_log, thermo_statis
 
 
 def cal_ep_via_dipole(dipole_file, log_file, epsilon_dump_file):

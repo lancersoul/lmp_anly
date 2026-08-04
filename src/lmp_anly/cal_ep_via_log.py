@@ -1,5 +1,6 @@
-from lmp_anly.utils import cal_ep, thermo_statis
 from rich import print
+
+from lmp_anly.utils import cal_ep, thermo_statis
 
 
 class MissingValueError(Exception):
@@ -7,8 +8,7 @@ class MissingValueError(Exception):
         self.missing_keys = tuple(misssing_keys)
         self.context = context
         if message is None:
-            message = f"Message required values: {
-                ', '.join(self.missing_keys)}"
+            message = f"Message required values: {', '.join(self.missing_keys)}"
         super().__init__(message)
 
 

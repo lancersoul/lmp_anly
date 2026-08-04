@@ -6,11 +6,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "matplotlib",
-    "numpy<2.0.0",
+    "numpy",
     "pandas",
     "rtoml",
-    "scipy==1.13.1",
+    "scipy",
     "typer",
+    "typing-extensions>=4.15.0",
 ]
 classifiers = ["Private :: Do Not Upload"]
 [project.scripts]

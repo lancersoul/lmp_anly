@@ -1,6 +1,8 @@
-import typer
-from typing_extensions import Annotated
 from pathlib import Path
+from typing import Annotated
+
+import typer
+
 from lmp_anly.cal_ep_via_dipole_dump import cal_ep_via_dipole
 
 
